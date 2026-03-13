@@ -11,6 +11,10 @@ A desktop WYSIWYG editor for Azure DevOps Wiki markdown files, with AI-powered e
 - Find and Replace panel
 - Code syntax highlighting (Prism.js)
 - Native file operations (New, Open, Save, Save As)
+- PDF viewer (pdfjs-dist)
+- Settings panel with in-app configuration editing
+- Configurable: font size, tab size, auto-save interval, image insert mode, debug log mode, splash screen
+- Keyboard shortcuts dialog
 
 ### Azure DevOps Wiki
 - Live connection to Azure DevOps wikis via Personal Access Token (PAT)
@@ -39,6 +43,8 @@ A desktop WYSIWYG editor for Azure DevOps Wiki markdown files, with AI-powered e
 - Automatic backup before AI modifications
 - Wiki search agent with map-reduce synthesis across pages
 - Change preview with diff view before applying
+- Persona system: analyze writing samples to maintain consistent voice and style across AI edits
+- Conversation observer and orchestrator for multi-turn interactions
 
 ### Mermaid Diagrams
 - **17 supported diagram types:** flowchart, swimlane (subgraphs), sequence, state, class, Gantt, pie, ER, mindmap, journey, timeline, gitGraph, C4 Context, quadrant chart, sankey, XY chart, block diagram
@@ -67,6 +73,11 @@ A desktop WYSIWYG editor for Azure DevOps Wiki markdown files, with AI-powered e
 - Architecture visualization
 - Function and class signature extraction
 - AI-powered file summarization
+
+### Transcription
+- Whisper-based voice-to-text transcription (optional)
+- Configurable model, language, beam size, and threading
+- Flash attention support for faster inference
 
 ### Local File System
 - File browser sidebar with directory navigation
@@ -109,47 +120,57 @@ npm install
 
 ## Configuration
 
-### Environment File
+### Configuration File
 
-Create a `.env` file in the application root (see `sample.env` for all options):
+Configuration is stored in `config.json` (see `config.json.sample` for all options). The file lives in the project root during development, or next to the executable when packaged.
 
-```env
-# Azure DevOps Connection
-AZURE_ORG=your-organization
-AZURE_PROJECT=your-project
-AZURE_PAT=your-personal-access-token
+You can also edit all settings from within the app via the **Settings panel** in the sidebar.
 
-# Optional: Specify a wiki (defaults to first wiki found)
-AZURE_WIKI_ID=your-wiki-id
-
-# Optional: Root path to limit wiki browsing
-AZURE_WIKI_ROOT_PATH=/some/path
-
-# Optional: Start at a specific page
-AZURE_WIKI_URL=https://dev.azure.com/org/project/_wiki/wikis/wiki-name/123/Page-Name
-
-# LLM Provider (gemini, openai, azure, anthropic)
-LLM_PROVIDER=gemini
-
-# Google Gemini
-GEMINI_API_KEY=your-api-key
-GEMINI_MODEL=gemini-2.0-flash
-
-# OpenAI
-OPENAI_API_KEY=your-api-key
-OPENAI_MODEL=gpt-4o
-
-# Azure OpenAI
-AZURE_OPENAI_API_KEY=your-api-key
-AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
-AZURE_OPENAI_DEPLOYMENT=your-deployment
-AZURE_OPENAI_MODEL=gpt-4o
-AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-3-large
-
-# Anthropic
-ANTHROPIC_API_KEY=your-api-key
-ANTHROPIC_MODEL=claude-sonnet-4-20250514
+```json
+{
+  "azure": {
+    "org": "your-organization",
+    "project": "your-project",
+    "pat": "your-personal-access-token",
+    "wikiId": "",
+    "wikiRootPath": "",
+    "wikiUrl": "https://dev.azure.com/org/project/_wiki/wikis/wiki-name"
+  },
+  "llm": {
+    "provider": "azure",
+    "maxOutputTokens": 0,
+    "gemini":    { "apiKey": "", "model": "gemini-3.0-flash" },
+    "openai":    { "apiKey": "", "model": "gpt-4o" },
+    "azure":     { "apiKey": "", "endpoint": "https://your-resource.services.ai.azure.com/",
+                   "deployment": "gpt-5.2", "model": "gpt-5.2",
+                   "apiVersion": "2024-12-01-preview",
+                   "embeddingDeployment": "text-embedding-3-large" },
+    "anthropic": { "apiKey": "", "model": "claude-sonnet-4-20250514" }
+  },
+  "editor": {
+    "fontSize": 14,
+    "tabSize": 4,
+    "autoSaveInterval": 0,
+    "theme": "light",
+    "wikiCacheTTL": 5,
+    "imageInsertMode": "ask",
+    "debugLogMode": "session",
+    "splashEnabled": true,
+    "splashDuration": 1000
+  },
+  "transcription": {
+    "whisperPath": "",
+    "modelPath": "",
+    "modelName": "medium",
+    "language": "en",
+    "flashAttention": true,
+    "beamSize": 1,
+    "threads": 0
+  }
+}
 ```
+
+> **Migrating from `.env`:** If you have an existing `.env` file, the app will auto-migrate your settings to `config.json` on first launch via `configService.js`.
 
 ## Azure DevOps Setup
 
@@ -301,12 +322,23 @@ Available tasks (run via `Ctrl+Shift+P` > `Tasks: Run Task`):
 # Start in development mode
 npm start
 
+# Start in production mode (disables F12 dev tools, longer splash)
+npm run start:prod
+
 # Package for current platform (creates portable exe)
 npm run package
 
+# Package in production mode
+npm run package:prod
+
 # Create installers (requires additional dependencies)
 npm run make
+
+# Create installers in production mode
+npm run make:prod
 ```
+
+The `:prod` variants set `PROD_BUILD=true`, which disables the F12 developer tools shortcut and uses a longer splash screen duration.
 
 ## Project Structure
 
@@ -317,8 +349,8 @@ AzureWikiEdit/
 ├── webpack.main.config.js    # Main process webpack config
 ├── webpack.renderer.config.js # Renderer webpack config
 ├── webpack.rules.js          # Shared webpack rules
-├── .env                      # Local configuration (not committed)
-├── sample.env                # Configuration template
+├── config.json               # Local configuration (not committed)
+├── config.json.sample        # Configuration template
 ├── patches/                  # npm patches (applied via patch-package)
 ├── tests/
 │   └── visual-editor/       # Puppeteer screenshot tests
@@ -329,14 +361,16 @@ AzureWikiEdit/
 │   ├── index.html             # Entry point
 │   ├── styles.css             # Global theming and dark mode
 │   ├── ai/
-│   │   ├── agents/            # Edit agent, doc agent, chunking tools
+│   │   ├── agents/            # Edit agent, doc agent, chunking tools,
+│   │   │                      #   conversation observer & orchestrator
 │   │   ├── analysis/          # Dependency graphs, architecture visualization
 │   │   │   └── extractors/    # Language-specific import/signature extractors
 │   │   ├── indexing/          # File indexing and summarization pipeline
+│   │   ├── persona/           # Persona style analysis and prompt building
 │   │   ├── prompts/           # System prompts, Mermaid rules, markdown rules
 │   │   ├── providers/         # Gemini, OpenAI, Azure, Anthropic
 │   │   ├── rag/               # Context assembly and query classification
-│   │   ├── splitters/         # Document/code splitters
+│   │   ├── splitters/         # Document/code/PDF splitters
 │   │   │   ├── languages/     # Language-specific chunking (JS, Python, C#, etc.)
 │   │   │   └── strategies/    # Semantic chunking and token estimation
 │   │   ├── vectordb/          # LanceDB vector store and index management
@@ -348,6 +382,7 @@ AzureWikiEdit/
 │   │   ├── backupManager.js   # AI edit backups
 │   │   ├── wikiSearchAgent.js # Wiki search agent
 │   │   └── wikiSynthesisAgent.js # Wiki synthesis agent
+│   ├── assets/                # Static assets (images, etc.)
 │   ├── azure/
 │   │   ├── azureClient.js     # Azure DevOps REST API client
 │   │   └── configManager.js   # Connection configuration
@@ -363,6 +398,8 @@ AzureWikiEdit/
 │   │   ├── tab-bar.js               # Multi-tab UI
 │   │   ├── activity-bar.js          # Sidebar panel switcher
 │   │   ├── settings-panel.js        # Settings UI
+│   │   ├── settings-panel-sections.js # Settings panel section definitions
+│   │   ├── keyboard-shortcuts-dialog.js # Keyboard shortcuts reference
 │   │   ├── find-replace.js          # Find/Replace panel
 │   │   ├── history-panel.js         # Version history
 │   │   ├── history-compare-dialog.js # Version diff viewer
@@ -374,13 +411,18 @@ AzureWikiEdit/
 │   │   ├── file-browser/            # Local file browser UI
 │   │   ├── indexing-wizard/         # Code indexing wizard
 │   │   ├── mermaid-visual-editor/   # Visual diagram editor (canvas, toolbar)
+│   │   ├── persona/                 # Persona selector, manager, wizard UI
 │   │   └── search-panel/            # File search UI
+│   ├── config/
+│   │   └── configService.js         # Config loading, saving, .env migration
 │   ├── file-browser/
 │   │   ├── fileSystemManager.js     # File I/O with validation
 │   │   ├── fileSearchEngine.js      # Full-text search
 │   │   ├── directoryCache.js        # Directory listing cache
 │   │   ├── directoryWatcher.js      # Watch for external changes
 │   │   └── pathValidator.js         # Security: path validation
+│   ├── navigation/
+│   │   └── navigationHistory.js     # Page navigation history
 │   ├── plugins/
 │   │   ├── toc-plugin.js            # [[_TOC_]] handler
 │   │   ├── mermaid-plugin.js        # Mermaid rendering
@@ -391,6 +433,8 @@ AzureWikiEdit/
 │   ├── tabs/
 │   │   ├── tabManager.js            # Tab state orchestration
 │   │   └── tabSessionStore.js       # Tab persistence
+│   ├── transcription/
+│   │   └── whisperService.js        # Whisper voice-to-text integration
 │   └── utils/
 │       ├── announcer.js             # Screen reader announcements
 │       ├── diff-utils.js            # Diff generation
@@ -408,6 +452,9 @@ AzureWikiEdit/
 | AI/LLM | LangChain.js with Google, OpenAI, Azure, Anthropic providers |
 | Vector DB | LanceDB + Apache Arrow |
 | Code Parsing | Tree-sitter (WASM) |
+| PDF | pdfjs-dist |
+| Image Processing | sharp |
+| Media | ffmpeg-static |
 | Rendering | Puppeteer (Mermaid-to-image) |
 | Bundler | Webpack (via Electron Forge) |
 | Language | JavaScript (CommonJS main process, ES6 renderer) |
