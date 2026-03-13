@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: file: https://dev.azure.com https://*.visualstudio.com; font-src 'self' data:; connect-src 'self' https://dev.azure.com https://generativelanguage.googleapis.com; frame-src 'self' local-pdf:;">
+  <title>AzureWikiEdit</title>
+</head>
+<body>
+  <!-- Screen reader announcements (aria-live regions) -->
+  <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  <div id="sr-announcer-assertive" class="sr-only" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- Splash Screen Overlay (inline styles ensure it renders before CSS/JS bundles load) -->
+  <div id="splash-screen" style="
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a3e, #2d1b4e, #1a2a4a);
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  ">
+    <img id="splash-logo" alt="Logo" style="width: 200px; margin-bottom: 24px; border-radius: 12px; opacity: 0.95;">
+    <div style="font-size: 28px; font-weight: 600; letter-spacing: 1px; margin-bottom: 8px;">AzureWikiEdit</div>
+    <div style="font-size: 14px; opacity: 0.7; margin-bottom: 32px;">by Major Computing Systems Ltd.</div>
+    <div id="splash-dots" style="display: flex; gap: 8px;">
+      <span class="splash-dot" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.6);"></span>
+      <span class="splash-dot" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.6);"></span>
+      <span class="splash-dot" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.6);"></span>
+    </div>
+  </div>
+
+  <!-- Main Layout Container (hidden until splash dismisses) -->
+  <div id="app-container" style="opacity: 0;">
+    <!-- Activity Bar (Far Left) -->
+    <div id="activity-bar" class="activity-bar">
+      <!-- Content populated by activity-bar.js -->
+    </div>
+
+    <!-- Left Panel Container -->
+    <div id="left-panel-container" class="left-panel-container">
+      <!-- Wiki Sidebar -->
+      <div id="wiki-sidebar" class="wiki-sidebar left-panel hidden">
+        <!-- Content populated by wiki-sidebar.js -->
+      </div>
+
+      <!-- File Browser -->
+      <div id="file-browser" class="file-browser left-panel hidden">
+        <!-- Content populated by file-browser.js -->
+      </div>
+
+      <!-- Search Panel -->
+      <div id="search-panel" class="search-panel left-panel hidden">
+        <!-- Content populated by search-panel.js -->
+      </div>
+    </div>
+
+    <!-- Editor Container -->
+    <div id="editor-container">
+      <div id="tab-bar"></div>
+      <div id="editor"></div>
+      <div id="pdf-viewer-container" class="pdf-viewer-container hidden">
+        <div class="pdf-viewer-toolbar">
+          <span class="pdf-viewer-filename"></span>
+          <div class="pdf-viewer-controls">
+            <button class="pdf-viewer-toggle-text" title="View as extracted text">View as Text</button>
+            <button class="pdf-viewer-toggle-pdf hidden" title="View as PDF">View as PDF</button>
+          </div>
+        </div>
+        <iframe id="pdf-viewer-frame" class="pdf-viewer-frame"></iframe>
+        <div id="pdf-viewer-text" class="pdf-viewer-text hidden"></div>
+      </div>
+    </div>
+
+    <!-- AI Chat Sidebar (Right) -->
+    <div id="ai-chat-sidebar" class="ai-sidebar hidden">
+      <!-- Content populated by ai-chat-sidebar.js -->
+    </div>
+  </div>
+
+  <!-- Contextual Table Toolbar -->
+  <div id="table-toolbar" class="table-toolbar hidden">
+    <div class="toolbar-section">
+      <button id="btn-insert-before" title="Insert line before table">↑ Insert Before</button>
+    </div>
+    <div class="toolbar-divider"></div>
+    <div class="toolbar-section">
+      <span class="toolbar-label">Row</span>
+      <button id="btn-add-row-above" title="Insert Row Above">+ Above</button>
+      <button id="btn-add-row-below" title="Insert Row Below">+ Below</button>
+      <button id="btn-delete-row" title="Delete Row" class="danger">Delete</button>
+    </div>
+    <div class="toolbar-divider"></div>
+    <div class="toolbar-section">
+      <span class="toolbar-label">Column</span>
+      <button id="btn-add-col-left" title="Insert Column Left">+ Left</button>
+      <button id="btn-add-col-right" title="Insert Column Right">+ Right</button>
+      <button id="btn-delete-col" title="Delete Column" class="danger">Delete</button>
+    </div>
+    <div class="toolbar-divider"></div>
+    <div class="toolbar-section">
+      <button id="btn-delete-table" title="Delete Entire Table" class="danger">Delete Table</button>
+    </div>
+  </div>
+
+  <!-- Mermaid Template Picker Modal -->
+  <div id="mermaid-picker-modal" class="hidden">
+    <!-- Content populated by mermaid-picker.js -->
+  </div>
+
+  <!-- Azure Connection Modal -->
+  <div id="azure-connection-modal" class="hidden">
+    <!-- Content populated by azure-connection.js -->
+  </div>
+
+  <!-- Wiki Tree Context Menu -->
+  <div id="tree-context-menu" class="context-menu hidden" role="menu" aria-label="Page actions">
+    <button class="context-menu-item" data-action="new-page" role="menuitem">
+      <span class="context-icon">➕</span>
+      <span>New Page Here</span>
+    </button>
+    <button class="context-menu-item" data-action="rename-page" role="menuitem">
+      <span class="context-icon">✏️</span>
+      <span>Rename</span>
+    </button>
+    <button class="context-menu-item context-menu-item-danger" data-action="delete-page" role="menuitem">
+      <span class="context-icon">🗑️</span>
+      <span>Delete</span>
+    </button>
+    <div class="context-divider" role="separator"></div>
+    <button class="context-menu-item" data-action="view-history" role="menuitem">
+      <span class="context-icon">📜</span>
+      <span>View History</span>
+    </button>
+    <button class="context-menu-item" data-action="open-in-new-tab" role="menuitem">
+      <span class="context-icon">📑</span>
+      <span>Open in New Tab</span>
+    </button>
+    <button class="context-menu-item" data-action="open-in-browser" role="menuitem">
+      <span class="context-icon">🌐</span>
+      <span>Open in Browser</span>
+    </button>
+    <div class="context-divider" role="separator"></div>
+    <button class="context-menu-item" data-action="add-favorite" role="menuitem">
+      <span class="context-icon">⭐</span>
+      <span>Add to Favorites</span>
+    </button>
+    <button class="context-menu-item" data-action="remove-favorite" role="menuitem">
+      <span class="context-icon">✕</span>
+      <span>Remove from Favorites</span>
+    </button>
+    <div class="context-divider" role="separator"></div>
+    <button class="context-menu-item" data-action="copy-path" role="menuitem">
+      <span class="context-icon">📋</span>
+      <span>Copy Path</span>
+    </button>
+  </div>
+</body>
+</html>

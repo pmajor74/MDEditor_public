@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+
+# Build output
+out/
+.webpack/
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor/IDE
+.idea/
+#.vscode/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+.env.*.local
+config.json
+
+# Package manager
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Misc
+*.log
+.cache/
+.temp/
+.tmp/
+nul
+poc-screenshots/

@@ -1,0 +1,65 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Development",
+      "type": "npm",
+      "script": "start",
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "Start the application in development mode"
+    },
+    {
+      "label": "Package Application",
+      "type": "shell",
+      "command": "npm run package",
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "Package the application (creates portable exe in out/ folder)"
+    },
+    {
+      "label": "Build Distributable",
+      "type": "shell",
+      "command": "npm run make",
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "Create distributable installer packages"
+    },
+    {
+      "label": "Deploy (Package + Zip)",
+      "type": "shell",
+      "command": "npm run package && powershell -Command \"Compress-Archive -Path 'out/AzureWikiEdit-win32-x64' -DestinationPath 'out/AzureWikiEdit-win32-x64.zip' -Force\"",
+      "windows": {
+        "command": "npm run package && powershell -Command \"Compress-Archive -Path 'out/AzureWikiEdit-win32-x64' -DestinationPath 'out/AzureWikiEdit-win32-x64.zip' -Force\""
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "problemMatcher": [],
+      "detail": "Package the application and create a distributable ZIP file"
+    },
+    {
+      "label": "Deploy (SSL Bypass)",
+      "type": "shell",
+      "command": "set NODE_TLS_REJECT_UNAUTHORIZED=0 && npm run package && powershell -Command \"Compress-Archive -Path 'out/AzureWikiEdit-win32-x64' -DestinationPath 'out/AzureWikiEdit-win32-x64.zip' -Force\"",
+      "windows": {
+        "command": "cmd /c \"set NODE_TLS_REJECT_UNAUTHORIZED=0 && npm run package && powershell -Command \\\"Compress-Archive -Path 'out/AzureWikiEdit-win32-x64' -DestinationPath 'out/AzureWikiEdit-win32-x64.zip' -Force\\\"\""
+      },
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "Deploy with SSL certificate verification disabled (for corporate networks)"
+    },
+    {
+      "label": "Clean Build",
+      "type": "shell",
+      "command": "rm -rf out .webpack",
+      "windows": {
+        "command": "if exist out rmdir /s /q out && if exist .webpack rmdir /s /q .webpack"
+      },
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "Clean build artifacts"
+    }
+  ]
+}

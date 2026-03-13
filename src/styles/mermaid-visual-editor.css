@@ -1,0 +1,2172 @@
+/**
+ * Visual Mermaid Editor Styles
+ */
+
+/* Utility classes */
+.hidden {
+  display: none !important;
+}
+
+/* Modal Container */
+.ve-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ve-modal.hidden {
+  display: none;
+}
+
+.ve-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.ve-modal-dialog {
+  position: relative;
+  width: 95%;
+  height: 90%;
+  max-width: 1400px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Modal Header */
+.ve-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #1976d2;
+  color: white;
+}
+
+.ve-modal-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.ve-modal-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0 8px;
+  opacity: 0.8;
+}
+
+.ve-modal-close:hover {
+  opacity: 1;
+}
+
+/* Toolbar */
+.ve-toolbar-container {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.ve-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 8px;
+  background: #f5f5f5;
+}
+
+.ve-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ve-toolbar-divider {
+  width: 1px;
+  height: 24px;
+  background: #ddd;
+  margin: 0 8px;
+}
+
+.ve-toolbar-spacer {
+  flex: 1;
+}
+
+.ve-toolbar-hint {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Buttons */
+.ve-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ve-btn:hover:not(:disabled) {
+  background: #f0f0f0;
+  border-color: #ccc;
+}
+
+.ve-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ve-btn-icon {
+  font-size: 14px;
+}
+
+.ve-btn-primary {
+  background: #1976d2;
+  border-color: #1976d2;
+  color: white;
+}
+
+.ve-btn-primary:hover:not(:disabled) {
+  background: #1565c0;
+  border-color: #1565c0;
+}
+
+.ve-btn-secondary {
+  background: #f5f5f5;
+}
+
+.ve-btn-danger {
+  color: #c62828;
+}
+
+.ve-btn-danger:hover:not(:disabled) {
+  background: #ffebee;
+}
+
+.ve-btn-small {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+/* Zoom Controls */
+.ve-zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ve-zoom-display {
+  min-width: 48px;
+  text-align: center;
+  font-size: 12px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Active state for toggle buttons (grid/snap) */
+.ve-btn.active {
+  background: #e3f2fd;
+  border-color: #1976d2;
+  color: #1976d2;
+}
+
+.ve-btn.active:hover:not(:disabled) {
+  background: #bbdefb;
+}
+
+/* Select */
+.ve-select {
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  background: white;
+  cursor: pointer;
+}
+
+.ve-select:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+/* Dropdown */
+.ve-dropdown {
+  position: relative;
+}
+
+.ve-dropdown-toggle {
+  padding: 6px 8px;
+}
+
+.ve-dropdown-toggle .ve-btn-caret {
+  font-size: 10px;
+  margin-left: 4px;
+}
+
+.ve-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 150px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  display: none;
+}
+
+.ve-dropdown-menu.show {
+  display: block;
+}
+
+.ve-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.ve-dropdown-item:hover {
+  background: #f0f0f0;
+}
+
+.ve-shape-icon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+/* Modal Content */
+.ve-modal-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Canvas Container */
+.ve-canvas-container {
+  flex: 1;
+  position: relative;
+  background: #fafafa;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  overflow: auto;
+}
+
+.visual-editor-svg {
+  min-width: 800px;
+  min-height: 600px;
+}
+
+/* Grid Layer */
+.ve-grid-layer line {
+  stroke: rgba(0, 0, 0, 0.1);
+  stroke-width: 1;
+}
+
+body.dark-mode .ve-grid-layer line {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+/* Right Panel (Preview/Code) */
+.ve-right-panel {
+  width: 380px;
+  min-width: 320px;
+  border-left: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  background: #f9f9f9;
+}
+
+/* Panel Tabs */
+.ve-panel-tabs {
+  display: flex;
+  background: #f0f0f0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.ve-tab {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #666;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+}
+
+.ve-tab:hover {
+  color: #333;
+  background: #e8e8e8;
+}
+
+.ve-tab.active {
+  color: #1976d2;
+  border-bottom-color: #1976d2;
+  background: #fff;
+}
+
+/* Panel Content */
+.ve-panel-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Preview Panel */
+.ve-preview-panel {
+  display: none;
+  flex: 1;
+  overflow: auto;
+  padding: 16px;
+  background: #fff;
+}
+
+.ve-preview-panel.active {
+  display: block;
+}
+
+.ve-preview-container {
+  min-height: 200px;
+}
+
+.ve-preview-container svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.ve-preview-loading,
+.ve-preview-empty,
+.ve-preview-error {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  font-size: 13px;
+}
+
+.ve-preview-error {
+  color: #c62828;
+  background: #ffebee;
+  border-radius: 4px;
+}
+
+/* Code Panel */
+.ve-code-panel {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  background: #f9f9f9;
+}
+
+.ve-code-panel.active {
+  display: flex;
+}
+
+.ve-code-actions {
+  padding: 8px 12px;
+  background: #f0f0f0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.ve-code-editor {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  resize: none;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  background: #f9f9f9;
+}
+
+.ve-code-editor:focus {
+  outline: none;
+}
+
+/* Toolbar Label */
+.ve-toolbar-label {
+  font-size: 12px;
+  color: #666;
+  margin-right: 4px;
+}
+
+/* Modal Footer */
+.ve-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 12px 20px;
+  background: #f5f5f5;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* SVG Canvas Styles */
+.node-shape {
+  fill: #e3f2fd;
+  stroke: #1976d2;
+  stroke-width: 2;
+  cursor: move;
+}
+
+.node-shape.selected {
+  fill: #bbdefb;
+  stroke: #0d47a1;
+  stroke-width: 3;
+}
+
+.node-shape:hover {
+  fill: #bbdefb;
+}
+
+.node-label {
+  font-size: 14px;
+  fill: #333;
+  pointer-events: none;
+  user-select: none;
+}
+
+.connection-point {
+  fill: #1976d2;
+  opacity: 0;
+  cursor: crosshair;
+  transition: opacity 0.15s;
+}
+
+.node-group:hover .connection-point {
+  opacity: 1;
+}
+
+.edge-path {
+  fill: none;
+  stroke: #666;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.edge-path.selected {
+  stroke: #1976d2;
+  stroke-width: 3;
+}
+
+.edge-path.dotted {
+  stroke-dasharray: 5, 5;
+}
+
+.edge-path.thick {
+  stroke-width: 4;
+}
+
+.edge-hit-area {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 20;
+  cursor: pointer;
+}
+
+.edge-label {
+  font-size: 12px;
+  fill: #333;
+}
+
+.edge-label-bg {
+  fill: white;
+  opacity: 1;
+  stroke: #ccc;
+  stroke-width: 1;
+  rx: 3;
+  ry: 3;
+}
+
+.arrow-marker {
+  fill: #666;
+  stroke: none;
+}
+
+.connecting-line {
+  stroke: #1976d2;
+  stroke-width: 2;
+  stroke-dasharray: 5, 5;
+  pointer-events: none;
+}
+
+/* Edge dragging (sequence diagram message reordering) */
+.edge-group.dragging {
+  cursor: grabbing;
+}
+
+.edge-group.dragging .edge-path {
+  stroke: #1976d2;
+  stroke-width: 3;
+}
+
+.edge-drop-zone {
+  fill: transparent;
+  pointer-events: none;
+}
+
+.edge-drop-zone.active {
+  fill: rgba(25, 118, 210, 0.15);
+  stroke: #1976d2;
+  stroke-width: 2;
+  stroke-dasharray: 5, 5;
+}
+
+/* Sequence diagram edge hover hint */
+.edge-hit-area[style*="cursor: grab"]:hover + .edge-path {
+  stroke: #1976d2;
+}
+
+/* Lifeline styles */
+.lifeline {
+  stroke: #999;
+  stroke-width: 1;
+  stroke-dasharray: 5, 5;
+}
+
+/* Dark Mode */
+body.dark-mode .ve-modal-dialog {
+  background: #252525;
+}
+
+body.dark-mode .ve-modal-header {
+  background: #5e35b1;
+}
+
+body.dark-mode .ve-toolbar {
+  background: #2d2d2d;
+}
+
+body.dark-mode .ve-toolbar-divider {
+  background: #404040;
+}
+
+body.dark-mode .ve-toolbar-hint {
+  color: #9e9e9e;
+}
+
+body.dark-mode .ve-btn {
+  background: #3d3d3d;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-btn:hover:not(:disabled) {
+  background: #4d4d4d;
+}
+
+body.dark-mode .ve-btn-primary {
+  background: #5e35b1;
+  border-color: #5e35b1;
+}
+
+body.dark-mode .ve-btn-primary:hover:not(:disabled) {
+  background: #4527a0;
+}
+
+body.dark-mode .ve-btn-danger {
+  color: #ef5350;
+}
+
+body.dark-mode .ve-btn-danger:hover:not(:disabled) {
+  background: #3e2723;
+}
+
+body.dark-mode .ve-zoom-display {
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-btn.active {
+  background: #3d2e5c;
+  border-color: #7c4dff;
+  color: #b388ff;
+}
+
+body.dark-mode .ve-btn.active:hover:not(:disabled) {
+  background: #4a3870;
+}
+
+body.dark-mode .ve-select {
+  background: #3d3d3d;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-dropdown-menu {
+  background: #3d3d3d;
+  border-color: #555;
+}
+
+body.dark-mode .ve-dropdown-item:hover {
+  background: #4d4d4d;
+}
+
+body.dark-mode .ve-canvas-container {
+  background-color: #1e1e1e;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+body.dark-mode .ve-right-panel {
+  background: #2d2d2d;
+  border-left-color: #404040;
+}
+
+body.dark-mode .ve-panel-tabs {
+  background: #353535;
+  border-bottom-color: #404040;
+}
+
+body.dark-mode .ve-tab {
+  color: #9e9e9e;
+}
+
+body.dark-mode .ve-tab:hover {
+  color: #e0e0e0;
+  background: #3d3d3d;
+}
+
+body.dark-mode .ve-tab.active {
+  color: #7c4dff;
+  border-bottom-color: #7c4dff;
+  background: #2d2d2d;
+}
+
+body.dark-mode .ve-preview-panel {
+  background: #252525;
+}
+
+body.dark-mode .ve-preview-loading,
+body.dark-mode .ve-preview-empty {
+  color: #9e9e9e;
+}
+
+body.dark-mode .ve-preview-error {
+  color: #ef5350;
+  background: #3e2723;
+}
+
+body.dark-mode .ve-code-panel {
+  background: #2d2d2d;
+}
+
+body.dark-mode .ve-code-actions {
+  background: #353535;
+  border-bottom-color: #404040;
+}
+
+body.dark-mode .ve-code-editor {
+  background: #2d2d2d;
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-toolbar-label {
+  color: #9e9e9e;
+}
+
+body.dark-mode .ve-modal-footer {
+  background: #2d2d2d;
+  border-top-color: #404040;
+}
+
+body.dark-mode .node-shape {
+  fill: #3d3d3d;
+  stroke: #7c4dff;
+}
+
+body.dark-mode .node-shape.selected {
+  fill: #4d4d4d;
+  stroke: #b388ff;
+}
+
+body.dark-mode .node-shape:hover {
+  fill: #4d4d4d;
+}
+
+body.dark-mode .node-label {
+  fill: #e0e0e0;
+}
+
+body.dark-mode .connection-point {
+  fill: #7c4dff;
+}
+
+body.dark-mode .edge-path {
+  stroke: #9e9e9e;
+}
+
+body.dark-mode .edge-path.selected {
+  stroke: #7c4dff;
+}
+
+body.dark-mode .edge-label {
+  fill: #e0e0e0;
+}
+
+body.dark-mode .edge-label-bg {
+  fill: #2d2d2d;
+  stroke: #555;
+}
+
+body.dark-mode .edge-group.dragging .edge-path {
+  stroke: #7c4dff;
+}
+
+body.dark-mode .edge-drop-zone.active {
+  fill: rgba(124, 77, 255, 0.15);
+  stroke: #7c4dff;
+}
+
+body.dark-mode .lifeline {
+  stroke: #666;
+}
+
+body.dark-mode .arrow-marker {
+  fill: #9e9e9e;
+  stroke: none;
+}
+
+body.dark-mode .connecting-line {
+  stroke: #7c4dff;
+}
+
+/* Sequence Diagram Lifelines */
+.lifeline {
+  stroke: #999;
+  stroke-width: 1;
+  stroke-dasharray: 5, 5;
+}
+
+body.dark-mode .lifeline {
+  stroke: #666;
+}
+
+/* Lifeline Hit Area for Message Drawing */
+.lifeline-hit-area {
+  fill: transparent;
+  cursor: crosshair;
+  pointer-events: all;
+  transition: fill 0.15s;
+}
+
+.lifeline-hit-area:hover {
+  fill: rgba(25, 118, 210, 0.1);
+}
+
+body.dark-mode .lifeline-hit-area:hover {
+  fill: rgba(124, 77, 255, 0.1);
+}
+
+/* Message Drawing Mode */
+body.drawing-message {
+  cursor: crosshair !important;
+}
+
+body.drawing-message * {
+  cursor: crosshair !important;
+}
+
+/* Message Preview Line */
+.message-preview-line {
+  stroke: #1976d2;
+  stroke-width: 2;
+  stroke-dasharray: 5, 5;
+  pointer-events: none;
+}
+
+body.dark-mode .message-preview-line {
+  stroke: #7c4dff;
+}
+
+/* Activation Boxes (on lifelines) */
+.activation-box {
+  fill: #e3f2fd;
+  stroke: #1976d2;
+  stroke-width: 1;
+}
+
+body.dark-mode .activation-box {
+  fill: #3d3d5c;
+  stroke: #7c4dff;
+}
+
+/* Sequence Diagram Notes */
+.sequence-note-bg {
+  fill: #fffde7;
+  stroke: #fbc02d;
+  stroke-width: 1;
+}
+
+.sequence-note-fold {
+  fill: none;
+  stroke: #fbc02d;
+  stroke-width: 1;
+}
+
+.sequence-note-text {
+  font-size: 12px;
+  fill: #333;
+}
+
+body.dark-mode .sequence-note-bg {
+  fill: #3d3d2d;
+  stroke: #ffb300;
+}
+
+body.dark-mode .sequence-note-fold {
+  stroke: #ffb300;
+}
+
+body.dark-mode .sequence-note-text {
+  fill: #e0e0e0;
+}
+
+body.dark-mode .ve-toolbar-container {
+  border-bottom-color: #404040;
+}
+
+/* Context Menu */
+.ve-context-menu {
+  position: absolute;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  padding: 4px 0;
+  min-width: 140px;
+}
+
+.ve-context-menu.hidden {
+  display: none;
+}
+
+.ve-context-item {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+  color: #333;
+}
+
+.ve-context-item:hover {
+  background: #f0f0f0;
+}
+
+body.dark-mode .ve-context-menu {
+  background: #3d3d3d;
+  border-color: #555;
+}
+
+body.dark-mode .ve-context-item {
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-context-item:hover {
+  background: #4d4d4d;
+}
+
+/* Inline Text Editor */
+.ve-inline-editor {
+  position: absolute;
+  background: white;
+  border: 2px solid #1976d2;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 200;
+}
+
+.ve-inline-editor:focus {
+  border-color: #0d47a1;
+}
+
+body.dark-mode .ve-inline-editor {
+  background: #3d3d3d;
+  border-color: #7c4dff;
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-inline-editor:focus {
+  border-color: #b388ff;
+}
+
+/* Flowchart Mini Property Panel */
+.ve-flowchart-panel {
+  position: absolute;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 200;
+  min-width: 220px;
+}
+
+.ve-flowchart-panel.hidden {
+  display: none;
+}
+
+.ve-flowchart-panel-content {
+  padding: 12px;
+}
+
+.ve-flowchart-panel-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e0e0e0;
+}
+
+body.dark-mode .ve-flowchart-panel {
+  background: #3d3d3d;
+  border-color: #555;
+}
+
+body.dark-mode .ve-flowchart-panel-actions {
+  border-top-color: #555;
+}
+
+/* Property Panel (slide-out for class/ER diagrams) */
+.ve-property-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background: #ffffff;
+  border-left: 1px solid #e0e0e0;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+}
+
+.ve-property-panel.hidden {
+  display: none;
+}
+
+.ve-property-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.ve-property-panel-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ve-property-panel-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+  padding: 0 4px;
+}
+
+.ve-property-panel-close:hover {
+  color: #333;
+}
+
+.ve-property-panel-content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.ve-property-group {
+  margin-bottom: 16px;
+}
+
+.ve-property-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.ve-property-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+.ve-property-input:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.ve-property-list {
+  margin-bottom: 8px;
+}
+
+.ve-property-list-item {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.ve-property-list-item .ve-property-input {
+  flex: 1;
+}
+
+.ve-property-list-item .ve-btn-danger {
+  flex-shrink: 0;
+  padding: 6px 10px;
+}
+
+/* ER diagram attribute type dropdown */
+.ve-er-attr-item {
+  display: flex;
+  gap: 6px;
+}
+
+.ve-type-select {
+  width: 90px;
+  flex-shrink: 0;
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  background: #fff;
+}
+
+.ve-type-select:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.ve-er-attr-item .ve-attr-name {
+  flex: 1;
+  min-width: 80px;
+}
+
+.ve-property-panel-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 12px 16px;
+  border-top: 1px solid #e0e0e0;
+  background: #f9f9f9;
+}
+
+/* Dark mode for property panel */
+body.dark-mode .ve-property-panel {
+  background: #2d2d2d;
+  border-left-color: #404040;
+}
+
+body.dark-mode .ve-property-panel-header {
+  background: #353535;
+  border-bottom-color: #404040;
+}
+
+body.dark-mode .ve-property-panel-close {
+  color: #9e9e9e;
+}
+
+body.dark-mode .ve-property-panel-close:hover {
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-property-label {
+  color: #9e9e9e;
+}
+
+body.dark-mode .ve-property-input {
+  background: #3d3d3d;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-property-input:focus {
+  border-color: #7c4dff;
+}
+
+body.dark-mode .ve-property-panel-footer {
+  border-top-color: #404040;
+  background: #353535;
+}
+
+/* Endpoint Drag Handles for Sequence Diagram Messages */
+.edge-endpoint-handle {
+  fill: #1976d2;
+  stroke: white;
+  stroke-width: 2;
+  cursor: ew-resize;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.edge-group:hover .edge-endpoint-handle {
+  opacity: 0.7;
+}
+
+.edge-endpoint-handle:hover {
+  opacity: 1 !important;
+  fill: #1565c0;
+}
+
+/* Snap Indicator for Lifeline */
+.snap-indicator,
+.snap-indicator-second {
+  fill: rgba(25, 118, 210, 0.3);
+  stroke: #1976d2;
+  stroke-width: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.snap-indicator.visible,
+.snap-indicator-second.visible {
+  opacity: 1;
+}
+
+/* Endpoint Drag Line */
+.endpoint-drag-line {
+  stroke: #1976d2;
+  stroke-width: 2;
+  stroke-dasharray: 5, 5;
+  pointer-events: none;
+}
+
+/* Dark mode for endpoint handles */
+body.dark-mode .edge-endpoint-handle {
+  fill: #7c4dff;
+}
+
+body.dark-mode .edge-endpoint-handle:hover {
+  fill: #b388ff;
+}
+
+body.dark-mode .snap-indicator,
+body.dark-mode .snap-indicator-second {
+  fill: rgba(124, 77, 255, 0.3);
+  stroke: #7c4dff;
+}
+
+body.dark-mode .endpoint-drag-line {
+  stroke: #7c4dff;
+}
+
+/* =============================================
+   CLASS DIAGRAM STYLES
+   ============================================= */
+
+/* Class box multi-section styling */
+.class-outline {
+  fill: #e3f2fd;
+  stroke: #1976d2;
+  stroke-width: 2;
+}
+
+.class-outline.selected {
+  fill: #bbdefb;
+  stroke: #0d47a1;
+  stroke-width: 3;
+}
+
+.class-header {
+  fill: #bbdefb;
+  stroke: none;
+}
+
+.class-divider {
+  stroke: #1976d2;
+  stroke-width: 1;
+}
+
+.class-name {
+  font-size: 14px;
+  font-weight: 600;
+  fill: #333;
+  pointer-events: none;
+}
+
+.class-stereotype {
+  font-size: 10px;
+  font-style: italic;
+  fill: #666;
+  pointer-events: none;
+}
+
+.class-member {
+  font-size: 12px;
+  font-family: 'Consolas', 'Monaco', monospace;
+  fill: #333;
+  pointer-events: none;
+}
+
+/* UML Markers */
+.uml-marker-hollow {
+  fill: white;
+  stroke: #666;
+  stroke-width: 1.5;
+}
+
+.uml-marker-filled {
+  fill: #666;
+  stroke: #666;
+  stroke-width: 1;
+}
+
+/* Dashed edges for dependency/realization */
+.edge-path.dashed {
+  stroke-dasharray: 8, 4;
+}
+
+/* Dark mode class diagram */
+body.dark-mode .class-outline {
+  fill: #3d3d3d;
+  stroke: #7c4dff;
+}
+
+body.dark-mode .class-outline.selected {
+  fill: #4d4d4d;
+  stroke: #b388ff;
+}
+
+body.dark-mode .class-header {
+  fill: #4a3870;
+}
+
+body.dark-mode .class-divider {
+  stroke: #7c4dff;
+}
+
+body.dark-mode .class-name {
+  fill: #e0e0e0;
+}
+
+body.dark-mode .class-stereotype {
+  fill: #9e9e9e;
+}
+
+body.dark-mode .class-member {
+  fill: #e0e0e0;
+}
+
+body.dark-mode .uml-marker-hollow {
+  fill: #2d2d2d;
+  stroke: #9e9e9e;
+}
+
+body.dark-mode .uml-marker-filled {
+  fill: #9e9e9e;
+  stroke: #9e9e9e;
+}
+
+/* =============================================
+   STATE DIAGRAM STYLES
+   ============================================= */
+
+/* Initial state (filled circle) */
+.state-initial-circle {
+  fill: #333;
+  stroke: #333;
+  stroke-width: 2;
+  cursor: move;
+}
+
+.state-initial-circle.selected {
+  stroke: #1976d2;
+  stroke-width: 3;
+}
+
+/* Final state (bullseye) */
+.state-final-outer {
+  fill: white;
+  stroke: #333;
+  stroke-width: 2;
+  cursor: move;
+}
+
+.state-final-outer.selected {
+  stroke: #1976d2;
+  stroke-width: 3;
+}
+
+.state-final-inner {
+  fill: #333;
+  stroke: none;
+  pointer-events: none;
+}
+
+/* Fork/Join bar */
+.state-fork-bar {
+  fill: #333;
+  stroke: #333;
+  stroke-width: 1;
+  cursor: move;
+}
+
+.state-fork-bar.selected {
+  stroke: #1976d2;
+  stroke-width: 2;
+}
+
+/* Dark mode state diagram */
+body.dark-mode .state-initial-circle {
+  fill: #e0e0e0;
+  stroke: #e0e0e0;
+}
+
+body.dark-mode .state-initial-circle.selected {
+  stroke: #7c4dff;
+}
+
+body.dark-mode .state-final-outer {
+  fill: #2d2d2d;
+  stroke: #e0e0e0;
+}
+
+body.dark-mode .state-final-outer.selected {
+  stroke: #7c4dff;
+}
+
+body.dark-mode .state-final-inner {
+  fill: #e0e0e0;
+}
+
+body.dark-mode .state-fork-bar {
+  fill: #e0e0e0;
+  stroke: #e0e0e0;
+}
+
+body.dark-mode .state-fork-bar.selected {
+  stroke: #7c4dff;
+}
+
+/* =============================================
+   ER DIAGRAM STYLES
+   ============================================= */
+
+/* Entity box styling */
+.entity-outline {
+  fill: #e3f2fd;
+  stroke: #1976d2;
+  stroke-width: 2;
+}
+
+.entity-outline.selected {
+  fill: #bbdefb;
+  stroke: #0d47a1;
+  stroke-width: 3;
+}
+
+.entity-header {
+  fill: #bbdefb;
+  stroke: none;
+}
+
+.entity-divider {
+  stroke: #1976d2;
+  stroke-width: 1;
+}
+
+.entity-name {
+  font-size: 14px;
+  font-weight: 600;
+  fill: #333;
+  pointer-events: none;
+}
+
+.entity-attribute {
+  font-size: 12px;
+  font-family: 'Consolas', 'Monaco', monospace;
+  fill: #333;
+  pointer-events: none;
+}
+
+.entity-pk {
+  font-weight: 600;
+  fill: #1976d2;
+}
+
+.entity-fk {
+  font-style: italic;
+  fill: #666;
+}
+
+/* ER Cardinality markers */
+.er-marker {
+  fill: none;
+  stroke: #666;
+  stroke-width: 2;
+}
+
+.er-marker-hollow {
+  fill: white;
+  stroke: #666;
+  stroke-width: 2;
+}
+
+/* Dark mode ER diagram */
+body.dark-mode .entity-outline {
+  fill: #3d3d3d;
+  stroke: #7c4dff;
+}
+
+body.dark-mode .entity-outline.selected {
+  fill: #4d4d4d;
+  stroke: #b388ff;
+}
+
+body.dark-mode .entity-header {
+  fill: #4a3870;
+}
+
+body.dark-mode .entity-divider {
+  stroke: #7c4dff;
+}
+
+body.dark-mode .entity-name {
+  fill: #e0e0e0;
+}
+
+body.dark-mode .entity-attribute {
+  fill: #e0e0e0;
+}
+
+body.dark-mode .entity-pk {
+  fill: #7c4dff;
+}
+
+body.dark-mode .entity-fk {
+  fill: #9e9e9e;
+}
+
+body.dark-mode .er-marker {
+  stroke: #9e9e9e;
+}
+
+body.dark-mode .er-marker-hollow {
+  fill: #2d2d2d;
+  stroke: #9e9e9e;
+}
+
+/* =============================================
+   PIE CHART EDITOR STYLES
+   ============================================= */
+
+/* Pie Editor Container */
+.ve-pie-editor-container {
+  flex: 1;
+  display: flex;
+  overflow: auto;
+  background: #fafafa;
+}
+
+.ve-pie-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Pie Header (Title + ShowData) */
+.ve-pie-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.ve-pie-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.ve-pie-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+}
+
+.ve-pie-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+}
+
+.ve-pie-input:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.ve-pie-title-input {
+  flex: 1;
+}
+
+.ve-pie-showdata-group {
+  display: flex;
+  align-items: center;
+}
+
+.ve-pie-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ve-pie-checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* Pie Table */
+.ve-pie-table-container {
+  flex: 1;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.ve-pie-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ve-pie-table thead {
+  background: #f5f5f5;
+  position: sticky;
+  top: 0;
+}
+
+.ve-pie-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.ve-pie-table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ve-pie-col-num {
+  width: 50px;
+  text-align: center;
+  color: #999;
+}
+
+.ve-pie-col-label {
+  min-width: 200px;
+}
+
+.ve-pie-col-value {
+  width: 120px;
+}
+
+.ve-pie-col-actions {
+  width: 80px;
+  text-align: center;
+}
+
+.ve-pie-segment-row:hover {
+  background: #fafafa;
+}
+
+.ve-pie-segment-row .ve-pie-input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ve-pie-segment-value {
+  text-align: right;
+}
+
+.ve-pie-empty-row td {
+  padding: 32px 16px;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+}
+
+.ve-pie-delete-btn {
+  padding: 4px 8px !important;
+  font-size: 18px !important;
+}
+
+/* Pie Footer */
+.ve-pie-footer {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.ve-pie-footer .ve-btn {
+  padding: 10px 20px;
+}
+
+/* Dark Mode - Pie Editor */
+body.dark-mode .ve-pie-editor-container {
+  background: #1e1e1e;
+}
+
+body.dark-mode .ve-pie-header {
+  background: #2d2d2d;
+  border-color: #404040;
+}
+
+body.dark-mode .ve-pie-label {
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-pie-input {
+  background: #3d3d3d;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-pie-input:focus {
+  border-color: #7c4dff;
+}
+
+body.dark-mode .ve-pie-checkbox-label {
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-pie-table-container {
+  background: #2d2d2d;
+  border-color: #404040;
+}
+
+body.dark-mode .ve-pie-table thead {
+  background: #353535;
+}
+
+body.dark-mode .ve-pie-table th {
+  color: #9e9e9e;
+  border-bottom-color: #404040;
+}
+
+body.dark-mode .ve-pie-table td {
+  border-bottom-color: #404040;
+}
+
+body.dark-mode .ve-pie-segment-row:hover {
+  background: #353535;
+}
+
+body.dark-mode .ve-pie-empty-row td {
+  color: #9e9e9e;
+}
+
+/* =============================================
+   GANTT CHART EDITOR STYLES
+   ============================================= */
+
+/* Gantt Editor Container */
+.ve-gantt-editor-container {
+  flex: 1;
+  display: flex;
+  overflow: auto;
+  background: #fafafa;
+}
+
+.ve-gantt-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  min-width: 600px;
+}
+
+/* Gantt Header (Title + Date Format) */
+.ve-gantt-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+
+.ve-gantt-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.ve-gantt-format-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ve-gantt-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+}
+
+.ve-gantt-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+}
+
+.ve-gantt-input:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.ve-gantt-title-input {
+  flex: 1;
+}
+
+.ve-gantt-select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+}
+
+.ve-gantt-select:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+/* Gantt Sections Container */
+.ve-gantt-sections-container {
+  flex: 1;
+  overflow: auto;
+}
+
+.ve-gantt-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+/* Gantt Section */
+.ve-gantt-section {
+  margin-bottom: 16px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ve-gantt-section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.ve-gantt-collapse-btn {
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #666;
+}
+
+.ve-gantt-collapse-btn:hover {
+  color: #333;
+}
+
+.ve-gantt-section-name {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 4px;
+}
+
+.ve-gantt-section-name:hover {
+  border-color: #ddd;
+  background: white;
+}
+
+.ve-gantt-section-name:focus {
+  outline: none;
+  border-color: #1976d2;
+  background: white;
+}
+
+.ve-gantt-task-count {
+  font-size: 12px;
+  color: #999;
+}
+
+.ve-gantt-section-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Gantt Tasks Container */
+.ve-gantt-tasks-container {
+  padding: 0;
+}
+
+.ve-gantt-tasks-container.ve-gantt-collapsed {
+  display: none;
+}
+
+.ve-gantt-no-tasks {
+  padding: 24px 16px;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+}
+
+/* Gantt Tasks Table */
+.ve-gantt-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.ve-gantt-table thead {
+  background: #fafafa;
+  position: sticky;
+  top: 0;
+}
+
+.ve-gantt-table th {
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  border-bottom: 1px solid #e0e0e0;
+  white-space: nowrap;
+}
+
+.ve-gantt-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+.ve-gantt-col-drag {
+  width: 30px;
+  text-align: center;
+}
+
+.ve-gantt-drag-handle {
+  cursor: grab;
+  color: #999;
+  user-select: none;
+  font-size: 14px;
+}
+
+.ve-gantt-drag-handle:hover {
+  color: #666;
+}
+
+.ve-gantt-col-label {
+  min-width: 150px;
+}
+
+.ve-gantt-col-taskid {
+  width: 80px;
+}
+
+.ve-gantt-col-start {
+  width: 180px;
+}
+
+.ve-gantt-col-duration {
+  width: 80px;
+}
+
+.ve-gantt-col-status {
+  width: 100px;
+}
+
+.ve-gantt-col-deps {
+  width: 150px;
+}
+
+.ve-gantt-col-actions {
+  width: 50px;
+  text-align: center;
+}
+
+.ve-gantt-task-row {
+  transition: background 0.15s;
+}
+
+.ve-gantt-task-row:hover {
+  background: #fafafa;
+}
+
+.ve-gantt-task-row .ve-gantt-input,
+.ve-gantt-task-row .ve-gantt-select {
+  padding: 6px 8px;
+  font-size: 13px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ve-gantt-task-label {
+  font-weight: 500;
+}
+
+.ve-gantt-task-id-input {
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 12px !important;
+}
+
+/* Start date container */
+.ve-gantt-start-container {
+  position: relative;
+}
+
+/* Status badges */
+.ve-gantt-task-status option[value="done"] {
+  color: #4caf50;
+}
+
+.ve-gantt-task-status option[value="active"] {
+  color: #2196f3;
+}
+
+.ve-gantt-task-status option[value="critical"] {
+  color: #f44336;
+}
+
+.ve-gantt-task-status option[value="milestone"] {
+  color: #9c27b0;
+}
+
+/* Drag and drop styles */
+.ve-gantt-task-row.ve-gantt-dragging {
+  opacity: 0.5;
+  background: #e3f2fd;
+}
+
+.ve-gantt-task-row.ve-gantt-drag-over {
+  border-top: 2px solid #1976d2;
+}
+
+/* Delete task button */
+.ve-gantt-delete-task {
+  padding: 4px 8px !important;
+  font-size: 16px !important;
+}
+
+/* Gantt Footer */
+.ve-gantt-footer {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.ve-gantt-footer .ve-btn {
+  padding: 10px 20px;
+}
+
+/* Dark Mode - Gantt Editor */
+body.dark-mode .ve-gantt-editor-container {
+  background: #1e1e1e;
+}
+
+body.dark-mode .ve-gantt-header {
+  background: #2d2d2d;
+  border-color: #404040;
+}
+
+body.dark-mode .ve-gantt-label {
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-gantt-input {
+  background: #3d3d3d;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-gantt-input:focus {
+  border-color: #7c4dff;
+}
+
+body.dark-mode .ve-gantt-select {
+  background: #3d3d3d;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-gantt-select:focus {
+  border-color: #7c4dff;
+}
+
+body.dark-mode .ve-gantt-empty {
+  background: #2d2d2d;
+  border-color: #404040;
+  color: #9e9e9e;
+}
+
+body.dark-mode .ve-gantt-section {
+  background: #2d2d2d;
+  border-color: #404040;
+}
+
+body.dark-mode .ve-gantt-section-header {
+  background: #353535;
+  border-bottom-color: #404040;
+}
+
+body.dark-mode .ve-gantt-collapse-btn {
+  color: #9e9e9e;
+}
+
+body.dark-mode .ve-gantt-collapse-btn:hover {
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-gantt-section-name {
+  color: #e0e0e0;
+}
+
+body.dark-mode .ve-gantt-section-name:hover {
+  border-color: #555;
+  background: #3d3d3d;
+}
+
+body.dark-mode .ve-gantt-section-name:focus {
+  border-color: #7c4dff;
+  background: #3d3d3d;
+}
+
+body.dark-mode .ve-gantt-task-count {
+  color: #9e9e9e;
+}
+
+body.dark-mode .ve-gantt-no-tasks {
+  color: #9e9e9e;
+}
+
+body.dark-mode .ve-gantt-table thead {
+  background: #353535;
+}
+
+body.dark-mode .ve-gantt-table th {
+  color: #9e9e9e;
+  border-bottom-color: #404040;
+}
+
+body.dark-mode .ve-gantt-table td {
+  border-bottom-color: #404040;
+}
+
+body.dark-mode .ve-gantt-drag-handle {
+  color: #666;
+}
+
+body.dark-mode .ve-gantt-drag-handle:hover {
+  color: #9e9e9e;
+}
+
+body.dark-mode .ve-gantt-task-row:hover {
+  background: #353535;
+}
+
+body.dark-mode .ve-gantt-task-row.ve-gantt-dragging {
+  background: #3d2e5c;
+}
+
+body.dark-mode .ve-gantt-task-row.ve-gantt-drag-over {
+  border-top-color: #7c4dff;
+}

@@ -1,0 +1,54 @@
+{
+  "azure": {
+    "org": "",
+    "project": "",
+    "pat": "[DEVOPS ORG PERSONAL ACCESS TOKEN WITH READ/WRITE RIGHTS TO YOUR WIKI GOES HERE",
+    "wikiId": "",
+    "wikiRootPath": "",
+    "wikiUrl": "https://dev.azure.com/[your org]/[project path]/_wiki/wikis/[wiki project path].wiki"
+  },
+  "llm": {
+    "provider": "azure",
+    "maxOutputTokens": 0,
+    "gemini": {
+      "apiKey": "<private>",
+      "model": "gemini-3.0-flash"
+    },
+    "openai": {
+      "apiKey": "<secret>",
+      "model": "gpt-4o"
+    },
+    "azure": {
+      "apiKey": "<private>",
+      "endpoint": "https://[your_deployment].services.ai.azure.com/",
+      "deployment": "gpt-5.2",
+      "model": "gpt-5.2",
+      "apiVersion": "2024-12-01-preview",
+      "embeddingDeployment": "text-embedding-3-large"
+    },
+    "anthropic": {
+      "apiKey": "",
+      "model": "claude-sonnet-4-20250514"
+    }
+  },
+  "editor": {
+    "fontSize": 14,
+    "tabSize": 4,
+    "autoSaveInterval": 0,
+    "theme": "light",
+    "wikiCacheTTL": 5,
+    "imageInsertMode": "ask",
+    "debugLogMode": "session",
+    "splashEnabled": true,
+    "splashDuration": 1000
+  },
+  "transcription": {
+    "whisperPath": "",
+    "modelPath": "",
+    "modelName": "medium",
+    "language": "en",
+    "flashAttention": true,
+    "beamSize": 1,
+    "threads": 0
+  }
+}
